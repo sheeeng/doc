@@ -177,8 +177,6 @@ Running Docker:
 
 Let’s try the `hello-world` example image. Run `docker run hello-world` command. This should download the very small `hello-world` image and print a `Hello from Docker.` message.
 
-- `hello-world`
-
 	whoami@hostname ~
 	$ docker run hello-world 2>&1 | tee docker_ubuntu_bash.log
 	Unable to find image 'hello-world:latest' locally
@@ -208,7 +206,7 @@ Let’s try the `hello-world` example image. Run `docker run hello-world` comman
 	For more examples and ideas, visit:
 	 http://docs.docker.com/userguide/
 
-- `ubuntu`
+Try something more ambitious, you can run an Ubuntu container.
 
     $ docker run -it ubuntu bash 2>&1 | tee docker_ubuntu_bash.log
     Unable to find image 'ubuntu:latest' locally
@@ -228,11 +226,7 @@ Let’s try the `hello-world` example image. Run `docker run hello-world` comman
     DISTRIB_RELEASE=14.04
     DISTRIB_CODENAME=trusty
     DISTRIB_DESCRIPTION="Ubuntu 14.04.2 LTS"
-    root@4c6d226fdf33:/# exit
-    exit
-
-    whoami@hostname ~
-    $
+    root@4c6d226fdf33:/#
 
 [Docker Containers on the Desktop](https://blog.jessfraz.com/post/docker-containers-on-the-desktop/)
     
@@ -240,14 +234,16 @@ Let’s try the `hello-world` example image. Run `docker run hello-world` comman
     $ docker run -it --name lynx jess/lynx 2>&1 | tee docker_jess_lynx.log
 
 
-whoami@hostname ~
-$ docker images
-REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-jess/lynx           latest              be32844af55b        16 hours ago        134.5 MB
-ubuntu              latest              d2a0ecffe6fa        17 hours ago        188.4 MB
-hello-world         latest              91c95931e552        11 weeks ago        910 B
+Check the list of (locally) available Docker images.
 
-whoami@hostname ~$
+	whoami@hostname ~
+	$ docker images
+	REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+	jess/lynx           latest              be32844af55b        16 hours ago        134.5 MB
+	ubuntu              latest              d2a0ecffe6fa        17 hours ago        188.4 MB
+	hello-world         latest              91c95931e552        11 weeks ago        910 B
+	
+	whoami@hostname ~$
 
 ## Remarks:
 
