@@ -3,71 +3,92 @@
 - [Getting Started](https://golang.org/doc/install)
 - [Downloads](https://golang.org/dl/)
 - [How to Write Go Code](https://golang.org/doc/code.html)
+- [GoGetTools - Installing Version Control Tools for go get](http://golang.org/s/gogetcmd)
 
 The [gopher images](https://golang.org/doc/gopher/) are Creative Commons Attributions 3.0 licensed. That means you can play with the images but you must give credit to their creator (Renee French) wherever they are used.
 
-
 ## Windows
 
-	C:\> setx GOPATH %CD%\go
+	C:\> setx GOPATH %USERPROFILE%\go
 
-- [GoGetTools - Installing Version Control Tools for go get](http://golang.org/s/gogetcmd)
+First Go Library:
 
-Example:
+Create `%GOPATH%\src\github.com\whoami\stringutil\stringutil.go` file with below content.
 
-	C:\> go get github.com/jfrazelle/weather
-
-	C:\> %GOPATH%\bin\weather -l "Kuala Lumpur, Malaysia" -u si
-	                            .;odc
-	                          ;kXNNNO
-	                        .0NNO0NN:
-	                       'XNK; dNNl
-	                       KNX'  'XNK.
-	                      ,NNk    cXNK,
-	                      ,NNk     '0NNO:.
-	                    .'cXNXl;,.   ,xXNNKOxxxk0Xx
-	                'lOXNNNNNNNNNNXOo'  ':oxkOXNNXc
-	              cKNNKd:'.    ..;d0NNKl    ,xXNK,
-	       .;:cclKNXd.              .oXNXxOXNNXl
-	   .cOXNNNNNNNO.                  .kNNNNNNNXOc.
-	  lXNXx;.    .                      .    .;dXNXo
-	 ONNd.                                       oXN0.
-	dNNo                                          cNNk
-	XNN.                                           NNX
-	0NN'                                          .NNK
-	;XN0.                                        .ONNc
-	 ;XNXo.                                    .lXNX:
-	  .oXNX0dlcclx0Xo.              .oXKxlccldOXNXd.
-	     ,lk0KXXK0xKNN0o;..    ..;o0NNKx0KXXX0ko,
-	                'lOXNNNNNNNNNNXOo,
-	                    :x0XNNX0x:.
+	// Package stringutil contains utility functions for working with
+	// strings.
+	package stringutil
 	
+	// Reverse returns its argument string reversed rune-wise left to right.
+	func Reverse(s string) string {
+	   r := []rune(s)
+	   for i, j := 0, len(r)-1; i < len(r)/2; i, j = i+1, j-1 {
+		   r[i], r[j] = r[j], r[i]
+	   }
+	   return string(r)
+	}
+
+Create `%GOPATH%\src\github.com\whoami\hello_reverse\hello_reverse.go` file with below content.
+
+	package main
 	
-	Current weather is Mostly Cloudy in Kuala Lumpur in Federal Territory of Kuala Lumpur for July 9 at 3:45pm CEST
-	The temperature is 27.96°C, but it feels like 31.33°C
+	import (
+		"fmt"
+		"github.com/whoami/stringutil"
+	)
 	
-	Ick! The humidity is 76%
-	The wind speed is 1.02 m/s NE
-	The cloud coverage is 80%
-	The visibilty is 0 kilometers
-	The pressure is 1008.73 mbar
+	func main() {
+		fmt.Printf(stringutil.Reverse("!oG ,olleH"))
+	}
+
+Build and install the library.
+
+	C:\> go install github.com\whoami\hello_reverse
+
+Run the program linked to the library.
+
+	C:\> set PATH=%PATH%;%GOPATH%\bin
 	
-	C:\> 
+	C:\> hello_reverse
+	Hello, Go!
 
+First Go Test:
 
-	mkdir %GOPATH%\src\github.com\whoami\hello
+Create `%GOPATH%\src\github.com\whoami\stringutil\stringutil_test.go` file with below content.
 
-For convenience, add the workspace's bin subdirectory to your PATH:
-
-- Linux / OS X
-
-	`$ export PATH=$PATH:$GOPATH/bin`
-
-- Windows
-
-	`C:\> set PATH=%PATH%;%GOPATH%\bin`
+	package stringutil
 	
+	import "testing"
+	
+	func TestReverse(t *testing.T) {
+		cases := []struct {
+			in, want string
+		}{
+			{"Hello, world", "dlrow ,olleH"},
+			{"Hello, 世界", "界世 ,olleH"},
+			{"", ""},
+		}
+		for _, c := range cases {
+			got := Reverse(c.in)
+			if got != c.want {
+				t.Errorf("Reverse(%q) == %q, want %q", c.in, got, c.want)
+			}
+		}
+	}
+
+Build and install the test.
+
+	C:\> go install github.com\whoami\hello_reverse
+
+Run the test.
+
+	C:\> go test github.com\whoami\stringutil
+	ok      github.com/whoami/stringutil    0.167s
+
 ## OS X
+
+	export GOPATH=$HOME/go
+	export PATH=$HOME/go/bin:$PATH
 
 Go Directory
 
@@ -137,3 +158,57 @@ Run it with `go run hello.go` command. Voila!
 	☆*･゜ﾟ･*\(^O^)/*･゜ﾟ･*☆
 	٩(^ᴗ^)۶
 	$
+
+
+## Advanced Example
+
+	C:\> go get github.com/jfrazelle/weather
+
+	C:\> %GOPATH%\bin\weather -l "Kuala Lumpur, Malaysia" -u si
+	                            .;odc
+	                          ;kXNNNO
+	                        .0NNO0NN:
+	                       'XNK; dNNl
+	                       KNX'  'XNK.
+	                      ,NNk    cXNK,
+	                      ,NNk     '0NNO:.
+	                    .'cXNXl;,.   ,xXNNKOxxxk0Xx
+	                'lOXNNNNNNNNNNXOo'  ':oxkOXNNXc
+	              cKNNKd:'.    ..;d0NNKl    ,xXNK,
+	       .;:cclKNXd.              .oXNXxOXNNXl
+	   .cOXNNNNNNNO.                  .kNNNNNNNXOc.
+	  lXNXx;.    .                      .    .;dXNXo
+	 ONNd.                                       oXN0.
+	dNNo                                          cNNk
+	XNN.                                           NNX
+	0NN'                                          .NNK
+	;XN0.                                        .ONNc
+	 ;XNXo.                                    .lXNX:
+	  .oXNX0dlcclx0Xo.              .oXKxlccldOXNXd.
+	     ,lk0KXXK0xKNN0o;..    ..;o0NNKx0KXXX0ko,
+	                'lOXNNNNNNNNNNXOo,
+	                    :x0XNNX0x:.
+	
+	
+	Current weather is Mostly Cloudy in Kuala Lumpur in Federal Territory of Kuala Lumpur for July 9 at 3:45pm CEST
+	The temperature is 27.96°C, but it feels like 31.33°C
+	
+	Ick! The humidity is 76%
+	The wind speed is 1.02 m/s NE
+	The cloud coverage is 80%
+	The visibilty is 0 kilometers
+	The pressure is 1008.73 mbar
+	
+	C:\> 
+
+## Remarks
+
+For convenience, add the workspace's bin subdirectory to your PATH:
+
+- Linux / OS X
+
+	`$ export PATH=$PATH:$GOPATH/bin`
+
+- Windows
+
+	`C:\> set PATH=%PATH%;%GOPATH%\bin`
