@@ -1,5 +1,7 @@
 [Docker - Build, Ship, and Run Any App, Anywhere](https://www.docker.com/)
 
+## Windows
+
 [Installation on Windows](https://docs.docker.com/installation/windows/)
 
 Read the [glossary](https://docs.docker.com/reference/glossary/) to familiar with the list of terms used around the Docker project.
@@ -244,6 +246,38 @@ Check the list of (locally) available Docker images.
 	hello-world         latest              91c95931e552        11 weeks ago        910 B
 	
 	whoami@hostname ~$
+
+## OS X
+
+[Installation on OS X](https://docs.docker.com/installation/mac/)
+
+	$ boot2docker init 2>&1 | tee boot2docker.log
+	$ boot2docker start 2>&1 | tee boot2docker_start.log
+	$ docker run hello-world 2>&1 | tee docker_hello-world.log
+
+If you see the below message ...
+
+	Post http:///var/run/docker.sock/v1.19/containers/create: dial unix /var/run/docker.sock: no such file or directory. Are you trying to connect to a TLS-enabled daemon without TLS?
+
+Remember that in the previous step ...
+
+	To connect the Docker client to the Docker daemon, please set:
+	    export DOCKER_HOST=tcp://192.168.59.103:2376
+	    export DOCKER_CERT_PATH=/Users/whoami/.boot2docker/certs/boot2docker-vm
+	    export DOCKER_TLS_VERIFY=1
+
+Use the below command to show environment variables for Docker client.
+
+	$ boot2docker shellinit
+	
+Otherwise, use this shortcut to set to your shell directly.
+
+	$ eval "$(boot2docker shellinit)"
+
+Examples: 
+
+	$  docker run hello-world 2>&1 | tee docker_hello-world.log
+	$ docker run -it ubuntu bash 2>&1 | tee docker_ubuntu_bash.log
 
 ## Remarks:
 
