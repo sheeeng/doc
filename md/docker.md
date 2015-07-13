@@ -247,6 +247,16 @@ Check the list of (locally) available Docker images.
 	
 	whoami@hostname ~$
 
+[Docker certs not valid with 1.7](https://github.com/boot2docker/boot2docker/issues/938)
+
+	$ docker ps
+	An error occurred trying to connect: Get https://192.168.59.103:2376/v1.19/containers/json: dial tcp 192.168.59.103:2376: ConnectEx tcp: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+
+Try the below command.
+
+	$ rm -v ~/.boot2docker/certs/boot2docker-vm/*.pem
+	$ boot2docker delete && boot2docker init && boot2docker start
+
 ## OS X
 
 [Installation on OS X](https://docs.docker.com/installation/mac/)
